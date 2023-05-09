@@ -3,7 +3,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class BruteForceAlgorithm {
+public class Main {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -17,7 +17,7 @@ public class BruteForceAlgorithm {
 
         Instant start = Instant.now();
 
-        ArrayList<String> results = LetterCombination.testAllCombinations(passwort.length(), passwort, hashOption==1, symbols==1);
+        ArrayList<String> results = BruteForce.prepareAllCombinations(passwort.length(), passwort, hashOption==1, symbols==1);
 
         System.out.println("Geknacktes Passwort: " + results.get(results.size()-1));
         System.out.println("Anzahl probierte Wörter: " + results.size());

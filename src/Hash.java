@@ -9,7 +9,7 @@ import javax.crypto.spec.PBEKeySpec;
 public class Hash {
 
 
-    public static String sha256(String input) throws NoSuchAlgorithmException {
+    public static String hash(String input) throws NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance("SHA-256");
         byte[] hashedBytes = md.digest(input.getBytes(StandardCharsets.UTF_8));
         StringBuilder sb = new StringBuilder();

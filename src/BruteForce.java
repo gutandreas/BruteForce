@@ -1,11 +1,11 @@
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
-public class LetterCombination {
+public class BruteForce {
 
     static String word;
     static boolean hashed;
-    public static ArrayList<String> testAllCombinations(int maxLength, String word, boolean hashed, boolean containsSymbols) {
+    public static ArrayList<String> prepareAllCombinations(int maxLength, String word, boolean hashed, boolean containsSymbols) {
 
         int lowest, highest;
 
@@ -18,8 +18,8 @@ public class LetterCombination {
             highest = 123;
         }
 
-        LetterCombination.word = word;
-        LetterCombination.hashed = hashed;
+        BruteForce.word = word;
+        BruteForce.hashed = hashed;
 
         String[] letters;
 
@@ -44,10 +44,9 @@ public class LetterCombination {
         }
 
 
-
         int wordLength = maxLength;
 
-        ArrayList<String> combinations = generateCombinations(letters, wordLength);
+        ArrayList<String> combinations = getAllCombinationsUntilPasswordFound(letters, wordLength);
         ArrayList<String> result = new ArrayList<>();
 
         //System.out.println("Alle Kombinationen von Länge " + wordLength + ":");
@@ -57,7 +56,7 @@ public class LetterCombination {
         return result;
     }
 
-    public static ArrayList<String> generateCombinations(String[] letters, int wordLength) {
+    public static ArrayList<String> getAllCombinationsUntilPasswordFound(String[] letters, int wordLength) {
         ArrayList<String> combinations = new ArrayList<>();
         int counter = 0;
 
@@ -69,16 +68,16 @@ public class LetterCombination {
 
         // Rekursiv alle Kombinationen generieren
         for (String letter : letters) {
-            List<String> shorterCombinations = generateCombinations(letters, wordLength - 1);
+            List<String> shorterCombinations = getAllCombinationsUntilPasswordFound(letters, wordLength - 1);
             for (String shorterCombination : shorterCombinations) {
                 String stringToTest = letter + shorterCombination;
                 combinations.add(stringToTest);
                 if (hashed){
                     try {
-                        String hashToTest = Hash.sha256(stringToTest);
+                        String hashToTest = Hash.hash(stringToTest);
                         System.out.println(stringToTest + " --> Hashwert: " + hashToTest);
-                        if (hashToTest.equals(Hash.sha256(word))){
-                            System.out.println("Ursprünglicher Hashwert: " + Hash.sha256(word));
+                        if (hashToTest.equals(Hash.hash(word))){
+                            System.out.println("Ursprünglicher Hashwert: " + Hash.hash(word));
                             return combinations;
                         }
                     } catch (NoSuchAlgorithmException e) {
